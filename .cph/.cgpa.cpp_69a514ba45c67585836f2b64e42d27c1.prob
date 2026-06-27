@@ -1,0 +1,1 @@
+{"name":"Local: cgpa","url":"/home/priyam/Documents/c++/cgpa.cpp","tests":[{"id":1778158876756,"input":"8 9 8 8 9 10 9 10 9 7","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/priyam/Documents/c++/cgpa.cpp","group":"local","local":true}
