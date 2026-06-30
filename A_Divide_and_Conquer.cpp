@@ -48,71 +48,15 @@ void printa(const vi &a) {
     cout << endl;
 }
 
-vector<long long> getUniquePrimeFactors(long long n) {
-    vector<long long> factors;
-
-    if (n % 2 == 0) {
-        factors.push_back(2);
-        while (n % 2 == 0) n /= 2;
-    }
-
-    for (long long i = 3; i * i <= n; i += 2) {
-        if (n % i == 0) {
-            factors.push_back(i);
-            while (n % i == 0) n /= i;
-        }
-    }
-
-    if (n > 1) factors.push_back(n);
-
-    return factors;
-}
-
-// void solve() {
-//     let(n);
-//     vi smt, t;
-//     string s; cin >> s;
-//     rep(i, n) {
-//         if (s[i] == '0') smt.pb(i + 1);
-//         else t.pb(i + 1);
-//     }
-//     int ans = 0;
-//     rep(i, sz(smt)) {
-//         vi primes = getUniquePrimeFactors(smt[i]);
-//         for (int i : primes) {
-//             if (find(all(t), i) == t.end()) {
-//                 ans += i;
-//             } else continue;
-//         }
-//     }
-//     cout << ans << '\n';
-// }
-
 void solve() {
-    let(n);
-    vi smt, t;
-    string s; cin >> s;
-    rep(i, n) {
-        if (s[i] == '0') smt.pb(i + 1);
-        else t.pb(i + 1);
-    }
-    int ans = 0;
-    rep(i, sz(smt)) {
-        int k = 1;
-        for (int j = i; j <= n; j *= k) {
-            auto it = find(all(smt), j);
-            if (it != smt.end()) {
-                ans += i;
-                k++;
-            }
-        }
-    }
-    cout << ans << '\n';
+    let2(x, y);
+    if (x % y == 0 && x >= y) YES;
+    else NO;
 }
 
 int32_t main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-    int tt = 1;  cin >> tt;  // Uncomment for multiple test cases
+    int tt = 1;   cin >> tt;  // Uncomment for multiple test cases
     for (int t = 1; t <= tt; t++) {
         solve();
     }
