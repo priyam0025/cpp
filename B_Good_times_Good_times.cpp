@@ -64,76 +64,17 @@ void printa(const vi &a)
 
 void solve()
 {
-    let(x);
-    vi goodNums;
-    
-    auto get = [&](int m) -> bool
+    int x;
+    cin >> x;
+    int y = 1;
+ 
+    while (x > 0)
     {
-        string s = to_string(m);
-        set<char> st(all(s));
-        return sz(st) <= 2;
-    };
-
-    auto generate = [&]() -> void //taken
-    {
-        set<int> st;
-
-        for (char d = '0'; d <= '9'; d++)
-        {
-            if (d == '0')
-                continue;
-            string cur;
-            for (int len = 1; len <= 10; len++)
-            {
-                cur += d;
-                int x = stoll(cur);
-                if (x <= 100000000LL)
-                    st.insert(x);
-            }
-        }
-
-        for (char d1 = '0'; d1 <= '9'; d1++)
-        {
-            for (char d2 = d1 + 1; d2 <= '9'; d2++)
-            {
-
-                for (int len = 1; len <= 10; len++)
-                {
-
-                    int total = 1 << len;
-
-                    for (int mask = 0; mask < total; mask++)
-                    {
-
-                        string s(len, d1);
-                        for (int i = 0; i < len; i++)
-                            if (mask & (1 << i))
-                                s[i] = d2;
-
-                        if (s[0] == '0')
-                            continue;
-
-                        int x = stoll(s);
-                        if (x <= 1000000000LL)
-                            st.insert(x);
-                    }
-                }
-            }
-        }
-
-        goodNums.assign(st.begin(), st.end());
-    };
-    generate();
-    for (int y : goodNums)
-    {
-        if (y < 2)
-            continue;
-        if (get(x * y))
-        {
-            cout << y << '\n';
-            return;
-        }
+        y *= 10;
+        x /= 10;
     }
+ 
+    cout << y + 1 << endl;
 }
 
 int32_t main()
