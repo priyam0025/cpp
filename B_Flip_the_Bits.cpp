@@ -1,80 +1,58 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops")
-#pragma GCC target("avx2,popcnt")
+int main() {
+	int t;
+	cin >> t; 
 
-#define int long long
-#define endl '\n'
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define vpii vector<pair<int, int>>
-#define pb push_back
-#define pii pair<int, int>
-#define all(x) (x).begin(), (x).end()
-#define sz(x) (int)(x).size()
-#define fi first
-#define se second
-#define rep(i, n) for(int i = 0; i < n; i++)
-#define rep1(i, n) for(int i = 1; i <= n; i++)
-#define FOR(i, a, b) for(int i = a; i < b; i++)
-#define maxel(x) (*max_element(all(x)))
-#define minel(x) (*min_element(all(x)))
-#define let(n) int n; cin >> n;
-#define let2(a, b) int a, b; cin >> a >> b;
-#define let3(a, b, c) int a, b, c; cin >> a >> b >> c;
-#define leta(arr, n) vi arr(n); for(int i = 0; i < n; i++) cin >> arr[i];
-#define YES cout << "YES\n"
-#define NO cout << "NO\n"
-#define print(...) cout << __VA_ARGS__ << endl
-#define YN(f) cout << (f ? "YES" : "NO") << endl
+	while (t--) {
+		int n;
+		cin >> n;
 
-const int INF = 2e18;
-const int mod = 1e9 + 7;
-const int mod2 = 998244353;
+		string a, b;
+		cin >> a >> b;
+		vector<bool> canFlip(n);
 
-int ipow(int x, int y) {
-    int res = 1;
-    while (y) {
-        if (y & 1) res *= x;
-        x *= x;
-        y >>= 1;
-    }
-    return res;
-}
+		int count0 = 0, count1 = 0; 
+		for (int i = 0; i < n; i++) {
+			if (a[i] == '0') {
+				count0++; 
+			} else {
+				count1++; 
+			}
+			if (count0 == count1) canFlip[i] = true;
+		} 
 
-void printa(const vi &a) {
-    for (auto x : a) cout << x << ' ';
-    cout << endl;
-}
+		bool isFlipped = false; 
+		bool isPoss = true;
+		for (int i = n - 1; i >= 0; i--) {
+			if (isFlipped == false) {
+				if (a[i] != b[i]) {
+					if (canFlip[i]) {
+						isFlipped ^= true; 
+					} else {
+						isPoss = false; 
+						break;
+					}
+				}
+			} else {
+				if (a[i] == b[i]) {
+					if (canFlip[i]) {
+						isFlipped ^= true;
+					} else {
+						isPoss = false; 
+						break;
+					}
+				}
+			}
+		} 
+		if (isPoss) {
+			cout << "YES\n";
+		} else {
+			cout << "NO\n";
+		}
+	}
 
-void solve() {
-    let(n);
-    string a, b;
-    cin >> a >> b;
-    int maxRange = INT_MIN, r = 0, cnt0 = 0, cnt1 = 0;
-    int idx = 0;
-    while (r < n) {
-        if (a[r] == '0') cnt0++;
-        if (a[r] == '1') cnt1++;
-        if (cnt0 == cnt1) {
-            idx = r;
-            maxRange = max(maxRange, r);
-        }
-        r++;
-    }
-    bool f = true;
-    for (int i = idx + 1; i < n; ++i) {
-        if (a[i] != b[i]) f = false;
-    }
-    YN(f);
-}
-
-int32_t main() {
-    ios::sync_with_stdio(false); cin.tie(nullptr);
-    int tt = 1;  cin >> tt;  // Uncomment for multiple test cases
-    for (int t = 1; t <= tt; t++) {
-        solve();
-    }
-    return 0;
+	return 0;
 }
