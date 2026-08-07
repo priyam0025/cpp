@@ -50,25 +50,26 @@ void printa(const vi &a) {
 
 void solve() {
     let(n);
-    string a, b;
-    cin >> a >> b;
-
-    bool ok = true;
-    int ans = 0;
-
-    for (int i = 0; i < 2; ++i) {
-        vi p1, p2;
-        for (int j = i; j < n; j += 2) {
-            if (a[j] == '1') p1.pb(j);
-            if (b[j] == '1') p2.pb(j);
-        }
-        if (sz(p1) != sz(p2)) {
-            ok = false;
-            break;
-        }
-        for (int i = 0; i < sz(p1); ++i) ans += abs(p1[i] - p2[i]);
+    leta(a, n);
+    vi prevDiff(n, -1);
+    int prev = -1;
+    FOR(i, 1, n) {
+        if (a[i] != a[i - 1])
+            prev = i - 1;
+        prevDiff[i] = prev;
     }
-    !ok ? cout << -1 << "\n" : cout << ans / 2 << "\n";
+    let(q);
+    while(q--) {
+        let2(l, r);
+        l--;
+        r--;
+        if (prevDiff[r] >= l) {
+            cout << r + 1 << " " << prevDiff[r] + 1 << "\n";
+        } else {
+            cout << -1 << " " << -1 << '\n';
+        }
+    }
+    cout << "\n";
 }
 
 int32_t main() {

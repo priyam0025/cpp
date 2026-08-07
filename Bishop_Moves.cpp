@@ -49,26 +49,17 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
-    string a, b;
-    cin >> a >> b;
-
-    bool ok = true;
-    int ans = 0;
-
-    for (int i = 0; i < 2; ++i) {
-        vi p1, p2;
-        for (int j = i; j < n; j += 2) {
-            if (a[j] == '1') p1.pb(j);
-            if (b[j] == '1') p2.pb(j);
+    let2(x1, y1);
+    let2(x2, y2);
+     if (x1 + y1 == x2 + y2 || x1 - y1 == x2 - y2) {
+            cout << 1 << endl;
         }
-        if (sz(p1) != sz(p2)) {
-            ok = false;
-            break;
+        else if ((x1 + y1) % 2 != (x2 + y2) % 2) {
+            cout << -1 << endl;
         }
-        for (int i = 0; i < sz(p1); ++i) ans += abs(p1[i] - p2[i]);
-    }
-    !ok ? cout << -1 << "\n" : cout << ans / 2 << "\n";
+        else {
+            cout << 2 << endl;
+        }
 }
 
 int32_t main() {
