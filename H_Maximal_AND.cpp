@@ -49,9 +49,29 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
-    leta(b, n);
-    
+    let2(n, k);
+    vi a(n);
+    cin >> a[0];
+    int ans = a[0];
+    rep1(i, n - 1) {
+        cin >> a[i];
+        ans &= a[i];
+    }
+    map<int, int> mp; //freq of unset bit <pos, no>
+    rep(i, n) {
+        int num = a[i];
+        for (int i = 0; i <= 30; ++i) {
+            if ((num & (1 << i)) == 0)
+            mp[i]++;
+        }
+    }
+    for (int i = 30; i >= 0 && k > 0; --i) {
+        if (mp[i] <= k) {
+            k -= mp[i];
+            ans |= (1 << i);
+        } 
+    }
+    cout << ans << "\n";
 }
 
 int32_t main() {

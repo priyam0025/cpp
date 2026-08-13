@@ -50,8 +50,27 @@ void printa(const vi &a) {
 
 void solve() {
     let(n);
-    leta(b, n);
-    
+    leta(a, n);
+    vi ans;
+    map<int, int> mp;
+    for (auto x : a) {
+        for (int i = 0; i < 30; ++i) {
+            if (x & (1 << i)) {
+                mp[i]++;
+            }
+        }
+    }
+    FOR(k, 1, n + 1) {
+        bool f = true;
+        for (int i = 0; i < 30; ++i) {
+            if (mp[i] % k != 0) { //
+                f = false;
+                break;
+            }
+        }
+        if (f) ans.pb(k);
+    }
+    printa(ans);
 }
 
 int32_t main() {

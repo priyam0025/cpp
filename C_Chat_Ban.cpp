@@ -49,10 +49,35 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
-    leta(b, n);
-    
-}
+    let2(k, x);
+    int l = 1, r = 2 * k - 1;
+    int ans = 2 * k - 1;
+
+    auto S = [&](int k) -> int {
+        return 1LL * k * (k  + 1) / 2;
+    };
+
+    auto get = [&](int m) -> int {
+        int sum = 0;
+        if (m < k) {
+            sum = S(m);
+        } else {
+            sum = S(k) + S(k - 1) - S(2 * k - 1 - m); 
+        }
+        return sum;
+    };
+
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (get(mid) >= x) {
+            ans = mid;
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+    cout << ans << "\n";
+}   
 
 int32_t main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
