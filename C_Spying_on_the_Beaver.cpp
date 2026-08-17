@@ -50,30 +50,66 @@ void printa(const vi &a) {
 
 void solve() {
     let(n);
-    leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
-    }
-    vi c(n, 0);
-    rep (i, n) {
-        c[mp[b[i]]] = i;
-    }
-    int mx = c[0];
-    int cnt = 0;
-    rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
-        }
-        mx = max(mx, c[i]);
-    }
-    cout << cnt << "\n";
-}
 
+    vi p(n + 1);
+    vector<vi> adj(n + 1);
+    for (int i = 2; i <= n; ++i) {
+        cin >> p[i];
+        adj[p[i]].pb(i);
+    }
+
+    let(m);
+    vector<bool> hasDam(n + 1, false);
+    for (int i = 0; i < m; ++i) {
+        let(a);
+        hasDam[a] = true;
+    }
+
+    vi damfreq(n + 1, 0);
+    for (int i = n; i >= 1; --i) {
+        if (hasDam[i]) {
+            damfreq[i]++;
+        }
+        if (i > 1) {
+            damfreq[p[i]] += damfreq[i];
+        }
+    }
+
+    vi cam;
+
+    for (int u = 1; u <= n; ++u) {
+        if (damfreq[u] == 0) continue;
+
+        vi actvChild;
+        for (int v : adj[u]) {
+            if (damfreq[v] > 0) {
+                actvChild.pb(v);
+            }
+        }
+
+        int c = sz(actvChild);
+        if (c == 0) continue;
+
+        if (hasDam[u]) {
+            for (int v : actvChild) {
+                cam.pb(v);
+            }
+        } else {
+            rep(i, c - 1) {
+                cam.pb(actvChild[i]);
+            }
+        }
+    }
+
+    cout << sz(cam);
+    for (int v : cam) {
+        cout << " " << v;
+    }
+    cout << "\n";
+}
 int32_t main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-    int tt = 1;  // cin >> tt;  // Uncomment for multiple test cases
+    int tt = 1;   cin >> tt;  // Uncomment for multiple test cases
     for (int t = 1; t <= tt; t++) {
         solve();
     }

@@ -49,31 +49,41 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
+    let2(n, h);
     leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
-    }
-    vi c(n, 0);
-    rep (i, n) {
-        c[mp[b[i]]] = i;
-    }
-    int mx = c[0];
-    int cnt = 0;
-    rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
+    int l = 0, r = n - 1;
+    int ans = 0;
+
+    auto get = [&](int m) -> int {
+        vi tmp;
+        rep(i, m + 1) {
+            tmp.pb(a[i]);
         }
-        mx = max(mx, c[i]);
+        sort(all(tmp));
+        int hReqd = 0, p = m;
+        while (p >= 0) {
+            hReqd += tmp[p];
+            p -= 2;
+            if (hReqd > h) break;
+        }
+        return hReqd;
+    };
+
+    while (l <= r) {
+        int mid = (l + r) >> 1;
+        if (get(mid) > h) {
+            r = mid - 1;
+        } else {
+            ans = mid;
+            l = mid + 1;
+        }
     }
-    cout << cnt << "\n";
+    cout << ans + 1 << "\n";
 }
 
 int32_t main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-    int tt = 1;  // cin >> tt;  // Uncomment for multiple test cases
+    int tt = 1;   //cin >> tt;  // Uncomment for multiple test cases
     for (int t = 1; t <= tt; t++) {
         solve();
     }

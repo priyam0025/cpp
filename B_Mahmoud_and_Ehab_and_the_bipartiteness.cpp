@@ -50,25 +50,29 @@ void printa(const vi &a) {
 
 void solve() {
     let(n);
-    leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
+    vvi adj(n, vi());
+    vi vis(n, 0);
+    rep(i, n - 1) {
+        let2(u, v);
+        u--;
+        v--;
+        adj[u].pb(v);
+        adj[v].pb(u);
     }
-    vi c(n, 0);
-    rep (i, n) {
-        c[mp[b[i]]] = i;
-    }
-    int mx = c[0];
-    int cnt = 0;
-    rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
+    int bg = 0;
+    int wt = 0;
+    auto dfs = [&](auto&& self, int node, int color) -> void {
+        vis[node] = 1;
+        color == 1 ? bg++ : wt++;
+        for (int u : adj[node]) {
+            if (!vis[u]) {
+                self(self, u, 1 - color);
+            }
         }
-        mx = max(mx, c[i]);
-    }
-    cout << cnt << "\n";
+    };
+
+    dfs(dfs, 0, 0);
+    cout << bg * wt - (n - 1) << "\n";
 }
 
 int32_t main() {

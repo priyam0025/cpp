@@ -49,26 +49,32 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
-    leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
-    }
-    vi c(n, 0);
-    rep (i, n) {
-        c[mp[b[i]]] = i;
-    }
-    int mx = c[0];
-    int cnt = 0;
+    string s;
+    cin >> s;
+    int n = sz(s);
+    vector<char> ans(n);
+    ans[0] = s[0];
     rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
+        if (s[i] == ans[i - 1]) {
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (c != s[i - 1]) {
+                    if (i < n - 1 and s[i + 1] != c) {
+                        ans[i] = c;
+                        break;
+                    } else if (i == n - 1) {
+                        ans[i] = c;
+                        break;
+                    }
+                }
+            }
+        } else {
+            ans[i] = s[i];
         }
-        mx = max(mx, c[i]);
     }
-    cout << cnt << "\n";
+    rep(i, n) {
+        cout << ans[i];
+    }
+    cout << "\n";
 }
 
 int32_t main() {

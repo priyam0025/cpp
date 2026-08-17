@@ -50,25 +50,31 @@ void printa(const vi &a) {
 
 void solve() {
     let(n);
-    leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
+    vi a(n);
+    map<int, vi> mp;
+    int total = 0;
+    rep(i, n) {
+        let(x);
+        a[i] = x;
+        total += x;
+        mp[x].pb(i + 1); 
     }
-    vi c(n, 0);
+    vi ans;
     rep (i, n) {
-        c[mp[b[i]]] = i;
-    }
-    int mx = c[0];
-    int cnt = 0;
-    rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
+        int r = a[i];
+        int restSum = total - r;
+        if (restSum % 2 != 0)
+            continue;
+        int need = restSum / 2;
+        if (mp.count(need)) {
+            
+            if (need != r || mp[need].size() >= 2) {
+                ans.pb(i + 1);
+            }
         }
-        mx = max(mx, c[i]);
     }
-    cout << cnt << "\n";
+    cout << sz(ans) << "\n";
+    printa(ans);
 }
 
 int32_t main() {

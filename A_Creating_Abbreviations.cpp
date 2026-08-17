@@ -49,31 +49,55 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
-    leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
+    let2(n, m);
+
+    vector<bool> available(26, false);
+    rep(i, n) {
+        string w;
+        cin >> w;
+        available[toupper(w[0]) - 'A'] = true;
     }
-    vi c(n, 0);
-    rep (i, n) {
-        c[mp[b[i]]] = i;
+
+    vector<string> a(m);
+    vector<bool> used(m, false);
+    for (int i = 0; i < m; ++i) {
+        cin >> a[i];
     }
-    int mx = c[0];
+
     int cnt = 0;
-    rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
+    while (true) {
+        bool f = false;
+        for (int i = 0; i < m; ++i) {
+            if (used[i]) continue;
+
+            bool canform = true;
+            for (char ch : a[i]) {
+                if (!available[ch - 'A']) {
+                    canform = false;
+                    break;
+                }
+            }
+
+            if (canform) {
+                used[i] = true;
+                available[a[i][0] - 'A'] = true;
+                f = true;
+                cnt++;
+            }
         }
-        mx = max(mx, c[i]);
+        if (!f) break;
     }
-    cout << cnt << "\n";
+
+    if (cnt == m) {
+        YES;
+    } else {
+        NO;
+    }
 }
 
 int32_t main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
-    int tt = 1;  // cin >> tt;  // Uncomment for multiple test cases
+    int tt = 1;   cin >> tt;  // Uncomment for multiple test cases
     for (int t = 1; t <= tt; t++) {
         solve();
     }

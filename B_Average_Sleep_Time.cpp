@@ -49,26 +49,23 @@ void printa(const vi &a) {
 }
 
 void solve() {
-    let(n);
-    leta(a, n);
-    leta(b, n);
-    map<int, int> mp;
-    rep (i, n) {
-        mp[a[i]] = i;
+    let2(n, k);
+    int sum = 0;
+    vi a(n);
+    rep(i, n) {
+        cin >> a[i];
+        if (i < k) sum += a[i];
     }
-    vi c(n, 0);
-    rep (i, n) {
-        c[mp[b[i]]] = i;
+    int total = sum;
+    int l = 0, r = k;
+    while (r < n) {
+        sum -= a[l];
+        sum += a[r];
+        total += sum;
+        l++;
+        r++;
     }
-    int mx = c[0];
-    int cnt = 0;
-    rep1(i, n - 1) {
-        if (c[i] < mx) {
-            cnt++;
-        }
-        mx = max(mx, c[i]);
-    }
-    cout << cnt << "\n";
+    cout << fixed << setprecision(10) <<  1.0 * total / (n - k + 1) << "\n";
 }
 
 int32_t main() {
